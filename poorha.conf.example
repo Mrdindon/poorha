@@ -1,0 +1,27 @@
+# poorha — configuration of THIS node (/etc/poorha/poorha.conf).
+# Each node has its own file. "poorha config" writes it, "poorha deploy"
+# creates the peer's, and poorha mirrors the "vm" lines on the peer itself
+# (vmids swapped). Editing by hand is possible: run "poorha deploy" afterwards
+# to resync the peer.
+
+NODE_NAME=pve1          # this host (hostname -s)
+NODE_IP=10.0.0.1          # its IP on the MGMT link
+PEER_NAME=pve2          # the other host
+PEER_IP=10.0.0.2
+STORAGE=local-lvm         # where replications received by THIS node land
+
+REF_IP=192.168.1.2        # always-on LAN device (switch): proves the LAN works
+GUARD_TRIES=15
+HEALTH_PING=              # optional: pinged from the source host before a replication
+TMP_DIR=/var/tmp          # containers: the archive is staged here before "pct restore"
+
+# Protected VMs:
+# vm <local vmid> peer=<vmid on the peer> [type=lxc] [standby=cold|hot] [keep=netX,…]
+#    [guard=<IP of the service>] [ref=<IP>] [note="text shown after activation, %NODE% = host"]
+
+# OPNsense: router profile (hot standby, WAN NIC kept up for PPPoE)
+vm 108 peer=208 standby=hot keep=net1 guard=192.168.1.1 note="Move the ONU / fiber to the WAN port of %NODE%."
+# Ordinary VMs: cold standby (stopped, every NIC down)
+vm 110 peer=110 guard=192.168.1.20
+# Container (LXC): same options, type=lxc
+vm 130 peer=130 type=lxc guard=192.168.1.30
