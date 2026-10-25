@@ -1,6 +1,6 @@
 # PoorHA — la haute dispo du pauvre pour VM et conteneurs Proxmox
 
-Redondance **manuelle** de VM et de **conteneurs LXC** entre deux hôtes Proxmox **non clusterisés**, sans Ceph ni stockage partagé. C'est la généralisation d'[opnha](https://github.com/Mrdindon/opnha) : le même principe, appliqué à toutes les VM et à tous les conteneurs qu'on veut, et plus seulement au routeur OPNsense.
+Redondance **manuelle** de VM et de **conteneurs LXC** entre deux hôtes Proxmox **non clusterisés**, sans Ceph ni stockage partagé. C'est la généralisation d'opnha (son prédécesseur, retiré) : le même principe, appliqué à toutes les VM et à tous les conteneurs qu'on veut, et plus seulement au routeur OPNsense.
 
 Tout tient dans **un seul script**, `poorha.sh`. On le copie sur un hôte, et il se déploie lui-même sur les deux. Il fournit :
 
